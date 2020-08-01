@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import static tech.jlsol.servernamedcbot.listeners.util.RoleManager.giveRole;
 
-public class ReactionHandler {
+public class ReactionAddHandler {
     public static void controlReactionInitM(GuildMessageReactionAddEvent event, String emote, JSONObject role){
         switch (emote) {
             case "RE:U+1f600": {//grinning
