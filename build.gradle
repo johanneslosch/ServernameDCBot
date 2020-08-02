@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+project.version = '1.0-SNAPSHOT'
+project.group = "tech.jlsol"
+project.sourceCompatibility = 14
+project.targetCompatibility = 14
+application.mainClassName = 'tech.jlsol.servernamedcbot.Main'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'net.dv8tion:JDA:4.2.0_168'
+    compile 'org.json:json:20200518'
+}
+
+jar {
+    manifest {
+        attributes (
+            'Main-Class': application.mainClassName,
+            'Created-By': 'johanneslosch'
+        )
+    }
+}
+
+// This creates a second hjar file with all dependencies included.
+task shadedJar(type: Jar) {
+    archiveBaseName = jar.archiveBaseName
+    archiveAppendix = jar.archiveAppendix
+    archiveVersion = jar.archiveVersion
+    archiveExtension = jar.archiveExtension
+    archiveClassifier = 'shaded'
+    from(jar.source)
+    configurations.compile.each { dep -> dep.name.endsWith('.jar') ? from(zipTree(dep)) : from(file(dep)) { exclude 'META-INF', 'META-INF/**' } }
+    manifest = jar.manifest
+}
+build.dependsOn shadedJar
