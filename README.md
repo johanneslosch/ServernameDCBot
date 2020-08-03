@@ -1,1 +1,2 @@
-[docs]()
+- [ ] Mute channel
+- [ ] Custom VC with mute chat
