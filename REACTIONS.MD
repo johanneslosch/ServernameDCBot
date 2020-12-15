@@ -17,7 +17,7 @@
  | 8 | U+1f60f | smirk | 
  | 9 | U+1f612 | UNAMUSED FACE | 
  | 10 | U+1f62b | TIRED | 
- | 11 | U+2639U+fe0f | ? | 
+ | 11 | U+2639U+fe0f | Frowning Face | 
  | 12 | U+1f615 | CONFUSED | 
  | 13 | U+1f61f | WORRIED | 
  | 14 | U+1f9d0 | FACE WITH MONOCLE  |
@@ -42,7 +42,7 @@
  | 8 | U+1f60f | smirk | game8
  | 9 | U+1f612 | UNAMUSED FACE | game9
  | 10 | U+1f62b | TIRED | game10
- | 11 | U+2639U+fe0f | ? | game11
+ | 11 | U+2639U+fe0f | Frowning Face | game11
  | 12 | U+1f615 | CONFUSED | game12
  | 13 | U+1f61f | WORRIED | game13
  | 14 | U+1f9d0 | FACE WITH MONOCLE | game14
