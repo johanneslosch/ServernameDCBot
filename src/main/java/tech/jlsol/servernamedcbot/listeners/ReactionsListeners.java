@@ -111,7 +111,7 @@ public class ReactionsListeners extends ListenerAdapter {
         }
         return null;
     }
-
+//grinning
     public static JSONObject getRole(String object){
         File file = new File("./data/roles.json");
         String content;

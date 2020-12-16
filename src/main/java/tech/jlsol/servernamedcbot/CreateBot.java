@@ -33,14 +33,15 @@ public class CreateBot {
                     .setAutoReconnect(true)
                     .setIdle(true)
                     .setStatus(OnlineStatus.DO_NOT_DISTURB)
+                    //TODO: make this working
                     //.setStatus(HandleOnlineStatus.handleStatus())
                     //.setActivity(CheckStatus.Status())
                     /*
                     import listener
-                    other
                     */
                     .addEventListeners(new ReactionsListeners())
                     .addEventListeners(new VoiceListeners())
+                    //.addEventListeners(new MessageListeners())
                     /*
                     guild listener
                     */
