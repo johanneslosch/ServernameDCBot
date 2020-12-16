@@ -5,7 +5,7 @@
 
 -------------------
 ## Main categories
- | ID | Emote ID | Emote-Name | Category-Role-Name | 
+ | ID | Emote ID | Emote-Name | Category-Role-Name |
  | --- | --- | --- | --- |
  | 1 | U+1f600 | grinning | politic
  | 2 | U+1f603 | SMILING FACE WITH OPEN MOUTH // smiley | art  |
@@ -14,23 +14,23 @@
  | 5 | U+1f606 | SMILING FACE WITH OPEN MOUTH AND TIGHTLY-CLOSED EYES | development
  | 6 | U+1f609 | WINKING FACE | twitch
  | 7 | U+1f61d | FACE WITH STUCK-OUT TONGUE AND TIGHTLY-CLOSED EYES | culture
- | 8 | U+1f60f | smirk | 
- | 9 | U+1f612 | UNAMUSED FACE | 
- | 10 | U+1f62b | TIRED | 
- | 11 | U+2639U+fe0f | Frowning Face | 
- | 12 | U+1f615 | CONFUSED | 
- | 13 | U+1f61f | WORRIED | 
+ | 8 | U+1f60f | smirk |
+ | 9 | U+1f612 | UNAMUSED FACE |
+ | 10 | U+1f62b | TIRED |
+ | 11 | U+2639U+fe0f | Frowning Face |
+ | 12 | U+1f615 | CONFUSED |
+ | 13 | U+1f61f | WORRIED |
  | 14 | U+1f9d0 | FACE WITH MONOCLE  |
- | 15 | U+1f617 | KISSING FACE | 
- | 16 | U+1f619 | KISSING FACE WITH SMILING EYES | 
- | 17 | U+1f929 | GRINNING FACE WITH STAR EYES | 
- | 18 | U+1f61e | DISAPPOINTED | 
- | 19 | U+1f629 | WEARY FACE | 
- | 20 | U+1f636 | FACE WITHOUT MOUTH | 
+ | 15 | U+1f617 | KISSING FACE |
+ | 16 | U+1f619 | KISSING FACE WITH SMILING EYES |
+ | 17 | U+1f929 | GRINNING FACE WITH STAR EYES |
+ | 18 | U+1f61e | DISAPPOINTED |
+ | 19 | U+1f629 | WEARY FACE |
+ | 20 | U+1f636 | FACE WITHOUT MOUTH |
 
 ## Other Categories
 ### games
- | ID | Emote ID | Emote-Name | Category-Role-Name | 
+ | ID | Emote ID | Emote-Name | Category-Role-Name |
  | --- | --- | --- | --- |
  | 1 | U+1f600 | grinning | game1
  | 2 | U+1f603 | SMILING FACE WITH OPEN MOUTH // smiley | game2  |
@@ -54,7 +54,7 @@
  | 20 | U+1f636 | FACE WITHOUT MOUTH | game20
 
 ### all other categories ( art, science, culture, development, politic, creators)
- | ID | Emote ID | Emote-Name | Category-Role-Name | 
+ | ID | Emote ID | Emote-Name | Category-Role-Name |
  | --- | --- | --- | --- |
  | 1 | U+1f600 | grinning | role1
  | 2 | U+1f603 | SMILING FACE WITH OPEN MOUTH // smiley | role2  |
