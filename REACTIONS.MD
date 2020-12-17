@@ -1,20 +1,43 @@
 # Reaction emotes
 <strong>WIP - not guarantee to work</strong>
- - Missing emotes at -> games
 
+# Emotes
+ ```
+ 1 - grinning
+ 2 - smiley
+ 3 - smile
+ 4 - grin
+ 5 - laughing
+ 6 - wink
+ 7 - stuck_out_tongue_closed_eyes
+ 8 - smirk
+ 9 - unamused
+ 10 - tired_face
+ 11 - frowning2
+ 12 - confused
+ 13 - worried
+ 14 - face_with_monocle
+ 15 - kissing
+ 16 - kissing_smiling_eyes
+ 17 - star_struck
+ 18 - disappointed
+ 19 - weary
+ 20 - no_mouth
+ ```
 
 -------------------
 ## Main categories
- | ID | Emote ID | Emote-Name | Category-Role-Name | 
+ | ID | Emote ID | Emote-Name | Category-Role-Name |
  | --- | --- | --- | --- |
- | 1 | U+1f600 | grinning | politic
- | 2 | U+1f603 | SMILING FACE WITH OPEN MOUTH // smiley | art  |
+ | 1 | U+1f600 | grinning | politic |
+ | 2 | U+1f603 | SMILING FACE WITH OPEN MOUTH | art
  | 3 | U+1f604 | SMILING FACE WITH OPEN MOUTH AND SMILING EYES | science
- | 4 | U+1f601 | GRINNING FACE WITH SMILING EYES | creators
- | 5 | U+1f606 | SMILING FACE WITH OPEN MOUTH AND TIGHTLY-CLOSED EYES | development
- | 6 | U+1f609 | WINKING FACE | twitch
- | 7 | U+1f61d | FACE WITH STUCK-OUT TONGUE AND TIGHTLY-CLOSED EYES | culture
- | 8 | U+1f60f | smirk | 
+ games - smiley
+ | 4 | U+1f601 | GRINNING FACE WITH SMILING EYES | creators | 
+ | 5 | U+1f606 | SMILING FACE WITH OPEN MOUTH AND TIGHTLY-CLOSED EYES | 
+ | 6 | U+1f609 | WINKING FACE | development | wink
+ | 7 | U+1f61d | FACE WITH STUCK-OUT TONGUE AND TIGHTLY-CLOSED EYES | twitch |
+ | 8 | U+1f60f | smirk | culture | smirk
  | 9 | U+1f612 | UNAMUSED FACE | 
  | 10 | U+1f62b | TIRED | 
  | 11 | U+2639U+fe0f | Frowning Face | 
@@ -33,7 +56,7 @@
  | ID | Emote ID | Emote-Name | Category-Role-Name | 
  | --- | --- | --- | --- |
  | 1 | U+1f600 | grinning | game1
- | 2 | U+1f603 | SMILING FACE WITH OPEN MOUTH // smiley | game2  |
+ | 2 | U+1f603 | SMILING FACE WITH OPEN MOUTH | game2  |
  | 3 | U+1f604 | SMILING FACE WITH OPEN MOUTH AND SMILING EYES | game3
  | 4 | U+1f601 | GRINNING FACE WITH SMILING EYES | game4
  | 5 | U+1f606 | SMILING FACE WITH OPEN MOUTH AND TIGHTLY-CLOSED EYES | game5
@@ -57,7 +80,7 @@
  | ID | Emote ID | Emote-Name | Category-Role-Name | 
  | --- | --- | --- | --- |
  | 1 | U+1f600 | grinning | role1
- | 2 | U+1f603 | SMILING FACE WITH OPEN MOUTH // smiley | role2  |
+ | 2 | U+1f603 | SMILING FACE WITH OPEN MOUTH | role2  |
  | 3 | U+1f604 | SMILING FACE WITH OPEN MOUTH AND SMILING EYES | role3
  | 4 | U+1f601 | GRINNING FACE WITH SMILING EYES | role4
  | 5 | U+1f606 | SMILING FACE WITH OPEN MOUTH AND TIGHTLY-CLOSED EYES | role5
