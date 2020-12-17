@@ -41,11 +41,13 @@ public class ReactionAddHandler {
                 giveRole(event, role.get("culture").toString());
                 break;
             }
-            //unused emotes
-            /*
+
             case "RE:U+1f612": {//UNAMUSED FACE
+                giveRole(event, role.get("notify").toString());
                 break;
             }
+            //unused emotes
+            /*
             case "RE:U+1f62b": {//TIRED
                 break;
             }

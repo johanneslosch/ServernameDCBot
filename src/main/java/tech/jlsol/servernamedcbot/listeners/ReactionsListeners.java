@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.json.JSONObject;
 import tech.jlsol.servernamedcbot.listeners.util.ReactionAddHandler;
 import tech.jlsol.servernamedcbot.listeners.util.ReactionRemoveHandler;
-import tech.jlsol.servernamedcbot.util.Config;
 import tech.jlsol.servernamedcbot.util.WriteFile;
 
 import javax.annotation.Nonnull;
@@ -28,8 +27,6 @@ public class ReactionsListeners extends ListenerAdapter {
 
     public void onGuildMessageReactionAdd(@Nonnull GuildMessageReactionAddEvent event) {
         String emote = event.getReaction().getReactionEmote().toString();
-        Config.writeConfig("data", "reactionUser", event.getGuild().getId() + event.getChannel().getId() + event.getMessageId() + event.getReaction().getReactionEmote().getName(), Arrays.toString(event.getReaction().retrieveUsers().complete().toArray()));
-        writeToFile(String.format("REACTION ADDED %s - %s - %s\n", Objects.requireNonNull(event.getReaction().getGuild()).getId(), event.getReaction().getChannel().getId(), emote));
         List<String> list = Arrays.asList(emotes);
 
         if(list.contains(emote)) {
@@ -61,18 +58,9 @@ public class ReactionsListeners extends ListenerAdapter {
     }
     public void onGuildMessageReactionRemove(@Nonnull GuildMessageReactionRemoveEvent event) {
         String emote = event.getReaction().getReactionEmote().toString();
-        Config.writeConfig("data", "reactionUser", event.getGuild().getId() + event.getChannel().getId() + event.getMessageId() + event.getReaction().getReactionEmote().getName(), Arrays.toString(event.getReaction().retrieveUsers().complete().toArray()));
-        writeToFile(String.format("REACTION REMOVED %s - %s - %s\n", Objects.requireNonNull(event.getReaction().getGuild()).getId(), event.getReaction().getChannel().getId(), emote));
         List<String> list = Arrays.asList(emotes);
 
         if(list.contains(emote)) {
-            /*
-            get message id
-            test if user has reaction_role
-            if yes
-                remove
-            do nothing
-             */
             if (event.getMessageId().equals(Objects.requireNonNull(getMsg()).get("init"))) {
                 ReactionRemoveHandler.controlReactionInitM(event, emote, getRole("interest"));
             }
@@ -111,7 +99,7 @@ public class ReactionsListeners extends ListenerAdapter {
         }
         return null;
     }
-//grinning
+
     public static JSONObject getRole(String object){
         File file = new File("./data/roles.json");
         String content;
@@ -124,6 +112,3 @@ public class ReactionsListeners extends ListenerAdapter {
         return null;
     }
 }
-/*
-Emote switch stuff: https://gist.github.com/johanneslosch/4f41bb4008ca4936c8595645e5005665
- */
