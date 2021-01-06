@@ -1,30 +1,46 @@
 package tech.jlsol.servernamedcbot.util;
 
+import com.mysql.cj.jdbc.MysqlDataSource;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Properties;
 
 public class SQLHandler {
     private static final String PORT = Config.readConfig("data", "credentials", "databasePORT");
     private static final String DBNAME = Config.readConfig("data", "credentials", "databaseUSER");
-    private static final String USER = Config.readConfig("data", "credentials", "databaseUSER");
+    private static final String USER = DBNAME;
     private static final String PASSWORD = Config.readConfig("data", "credentials", "databasePASSWORD");
 
     private static final String DATABASE_URL = "jdbc:mysql://" + Config.readConfig("data", "credentials","databaseURL") +":" + PORT + "/" + DBNAME;
     private static Connection connection;
     private static PreparedStatement prepareStatement;
 
-    private static String getDatabaseUrl(String databaseName){
-        return "jdbc:mysql://" + Config.readConfig("data", "credentials","databaseURL") +":" + PORT + "/" + databaseName;
-    }
     /**
      * @return                  the connection
      */
-    private static Connection connect() {
+    public static Connection connect() {
+
+
         if (connection == null) {
-            System.out.println("Connecting database...");
+            System.out.println(System.nanoTime() + " Connecting database...");
 
             try {
-                connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
-                System.out.println("Database connected!");
+                //String connectionString = "jdbc:mysql://116.203.106.254:3306/" + DBNAME + "?user=" + USER+ "&password=" + PASSWORD + "&useUnicode=true&characterEncoding=UTF-8";
+                //connection = DriverManager.getConnection(connectionString);
+                //Context context = new InitialContext();
+                //DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/myDB");
+                MysqlDataSource dataSource = new MysqlDataSource();
+                dataSource.setUser(USER);
+                dataSource.setPassword(PASSWORD);
+                dataSource.setServerName("116.203.106.254");
+                connection = dataSource.getConnection();
+                System.out.println(System.nanoTime() + " Database connected!");
             } catch (SQLException e) {
                 Logger.error(e.getMessage());
                 e.printStackTrace();
@@ -104,6 +120,13 @@ public class SQLHandler {
         return prepareStatement;
     }
 
+    private static PreparedStatement preparedStatementFeatureRequest(String time, String message, String user) throws SQLException {
+        connect();
+        prepareStatement.execute();
+        prepareStatement = connection.prepareStatement(String.format("INSERT INTO `featurerequests` (`id`, `time`, `request`, `requested by`) VALUES (NULL,%s,%s,%s) %s,%s,%s,)", time, message, user));
+        return prepareStatement;
+    }
+
     /**
      * Deletes Data from Database
      * @param id        number of Element
@@ -142,6 +165,7 @@ public class SQLHandler {
      * Class to get/set Data from Database
      */
     public static class MySQLUseDataManager {
+        public static String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Calendar.getInstance().getTime());
         public static String getInt(String category, String table) throws SQLException {
             return String.valueOf(getData(category, table).getInt(1));
 
@@ -153,6 +177,10 @@ public class SQLHandler {
 
         public static void setUserUpdate(String time, boolean bot, int roles, String guild, String oldStatus, String newStatus) throws SQLException {
             SQLHandler.preparedStatementUserUpdate(time, bot, roles, guild, oldStatus, newStatus);
+        }
+
+        public static void setFeatureRequest(String time, String message, String user) throws SQLException {
+            SQLHandler.preparedStatementFeatureRequest(time, message, user);
         }
 
         public static void setMemberChange(String time, boolean bot, int roles, String guild, String event) throws SQLException {

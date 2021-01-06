@@ -14,11 +14,12 @@ import tech.jlsol.servernamedcbot.util.SQLHandler;
 
 import javax.annotation.Nonnull;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+
+
+import static tech.jlsol.servernamedcbot.util.SQLHandler.MySQLUseDataManager.timeStamp;
 
 public class Messages extends ListenerAdapter {
-    String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Calendar.getInstance().getTime());
+
 
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
         try {
