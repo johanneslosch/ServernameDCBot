@@ -25,13 +25,10 @@ public class JSONHandler {
 
     public static void FeatureRequestWriter(String request, String requestedBy){
         JSONObject object = new JSONObject();
-        JSONArray array = new JSONArray();
-        array.put(0, "ID: " + getIDFeatureRequest())
-                .put(1, "time: " + SQLHandler.MySQLUseDataManager.timeStamp)
-                .put(2, "request: " + request)
-                .put(3, "requested by: " + requestedBy);
-        object.put("id", getIDFeatureRequest())
-                .put("details", array);
+        object.put( "ID" , getIDFeatureRequest())
+                .put("time", SQLHandler.MySQLUseDataManager.timeStamp)
+                .put("request", request)
+                .put("requested by", requestedBy);
         setIDFeatureRequest();
         WriteFile.writer(
                 "featureRequest",
