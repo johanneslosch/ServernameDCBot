@@ -27,32 +27,14 @@ public class CreateBot {
                     GatewayIntent.GUILD_MESSAGES,
                     GatewayIntent.GUILD_PRESENCES,
                     GatewayIntent.GUILD_VOICE_STATES)
-                    /*
-                    set Flag´s
-                    */
                     .setAutoReconnect(true)
                     .setIdle(true)
                     .setStatus(OnlineStatus.DO_NOT_DISTURB)
                     //TODO: make this working
                     //.setStatus(HandleOnlineStatus.handleStatus())
                     //.setActivity(CheckStatus.Status())
-                    /*
-                    import listener
-                    */
                     .addEventListeners(new ReactionsListeners())
                     .addEventListeners(new VoiceListeners())
-                    //.addEventListeners(new MessageListeners())
-                    /*
-                    guild listener
-                    */
-                    //.addEventListeners(new _VoiceChannel())
-                    /*
-                    commands
-                    */
-                    //.addEventListeners(new Blacklist_Command())
-                    /*
-                    build the bot
-                    */
                     .build();
         } catch (LoginException e) {
             e.printStackTrace();
