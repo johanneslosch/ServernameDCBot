@@ -3,6 +3,7 @@ package tech.jlsol.servernamedcbot;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import tech.jlsol.servernamedcbot.listeners.MessageListeners;
 import tech.jlsol.servernamedcbot.listeners.ReactionsListeners;
 import tech.jlsol.servernamedcbot.listeners.VoiceListeners;
 import tech.jlsol.servernamedcbot.util.Config;
@@ -35,6 +36,21 @@ public class CreateBot {
                     //.setActivity(CheckStatus.Status())
                     .addEventListeners(new ReactionsListeners())
                     .addEventListeners(new VoiceListeners())
+<<<<<<< HEAD
+=======
+                    .addEventListeners(new MessageListeners())
+                    /*
+                    guild listener
+                    */
+                    //.addEventListeners(new _VoiceChannel())
+                    /*
+                    commands
+                    */
+                    //.addEventListeners(new Blacklist_Command())
+                    /*
+                    build the bot
+                    */
+>>>>>>> 43a04c710a61ccea01101acab699b018d81d0e86
                     .build();
         } catch (LoginException e) {
             e.printStackTrace();
