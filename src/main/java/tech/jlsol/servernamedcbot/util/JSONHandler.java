@@ -32,8 +32,8 @@ public class JSONHandler {
         setIDFeatureRequest();
         WriteFile.writer(
                 "featureRequest",
-                "#" + getOldIDFeatureRequest() + "---" +
-                        SQLHandler.MySQLUseDataManager.timeStamp,
+                SQLHandler.MySQLUseDataManager.timeStamp + "---" +
+                        "#" + getOldIDFeatureRequest(),
                 "json",
                 object.toString(1));
     }
