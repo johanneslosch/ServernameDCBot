@@ -5,17 +5,15 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONTokener;
+import tech.jlsol.servernamedcbot.Main;
 import tech.jlsol.servernamedcbot.util.Config;
 import tech.jlsol.servernamedcbot.util.Logger;
 
 import javax.annotation.Nonnull;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.ParseException;
+import java.io.*;
 import java.util.concurrent.TimeUnit;
 
 import static tech.jlsol.servernamedcbot.util.JSONHandler.FeatureRequestWriter;
@@ -28,14 +26,6 @@ public class MessageListeners extends ListenerAdapter {
         if(!event.getAuthor().isBot()){
             if(event.getChannel().getName().equals(getConfig("featureRQ-TC"))){
                 if(event.getMessage().getContentRaw().toLowerCase().startsWith(getConfig("prefix"))){
-                    /*try {
-                        SQLHandler.MySQLUseDataManager.setFeatureRequest(SQLHandler.MySQLUseDataManager.timeStamp,
-                         event.getMessage().getContentRaw().substring(getConfig("prefix").length()),
-                         event.getAuthor().getAsTag());
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                        Logger.error(throwables.getMessage());
-                    }*///SQL Connection
                     FeatureRequestWriter(event.getMessage().getContentRaw()
                                     .substring(getConfig("prefix").length()),
                             event.getAuthor().getAsTag() + "/" + event.getAuthor().getId());
@@ -71,35 +61,60 @@ public class MessageListeners extends ListenerAdapter {
                             Logger.error("Failed to delete the file");
                         }
                 }
-                if(event.getMessage().getContentRaw().toLowerCase().startsWith(getConfig("prefix")+"showAll")){
+                if(event.getMessage().getContentDisplay().toLowerCase().startsWith(getConfig("prefix")+"showall")){
                     String[] pathNames;
-
-                    // Creates a new File instance by converting the given pathname string
-                    // into an abstract pathname
-                    File f = new File("./featureRequest");
-
-                    // Populates the array with names of files and directories
+                    File f = new File("./featureRequest/");
                     pathNames = f.list();
-                    // For each pathname in the pathNames array
+
                     for (String pathname : pathNames) {
-                        // Print the names of files and directories
-                        System.out.println(pathname);
-                        JSONObject jsonObject = new JSONObject();
-
-                        try (FileReader reader = new FileReader(pathname))
-                        {
-                            event.getChannel().sendMessage((CharSequence) new EmbedBuilder()
-                            //.setAuthor(event.getJDA().getUserByTag()
-                            .setDescription(jsonObject.getString("request"))
-                            .setColor(Color.WHITE)
-                            .setTitle("IDEA - " + jsonObject.getInt("ID"))).complete();
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        handleFileData(f, pathname, event);
                     }
                 }
+                if(event.getMessage().getContentDisplay().toLowerCase().startsWith(getConfig("prefix")+"get")){
+                    String message = event.getMessage().getContentDisplay().toLowerCase()
+                            .replace(getConfig("prefix")+"get", "");
+                    if(message.startsWith(" ")){
+                        message = message.replace(" ", "");
+                    }
+                    System.out.println(message);
+                    String[] pathNames;
+                    File f = new File("./featureRequest/");
+                    pathNames = f.list();
+
+                    for (String pathname : pathNames) {
+                        if(pathname.endsWith("#" + message + ".json")){
+                            handleFileData(f, pathname, event);
+                        }
+                    }
+
+
+                }
             }
+        }
+    }
+
+    /**
+     *                     handles file data, and print it as embed messages in text channel
+     * @param f            directory, 'File f = new File("./featureRequest/")'
+     * @param pathname     String with filename
+     * @param event        MessageReceiveEvent to get connected to guild
+     */
+    private void handleFileData(File f, String pathname, MessageReceivedEvent event){
+        try {
+            FileInputStream fileInputStream = new FileInputStream(String.format("%s/%s", f, pathname));
+            JSONTokener tokener = new JSONTokener(fileInputStream);
+            JSONObject object = new JSONObject(tokener);
+            event.getChannel().sendMessage(
+                    new EmbedBuilder()
+                            .setAuthor(object.getString("requested by"))
+                            .setDescription(object.getString("request"))
+                            .setTitle("Feature-Request - " + object.getInt("ID"))
+                            .setFooter(object.getString("time"))
+                            .setColor(Color.BLUE)
+                            .build())
+                    .queue();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
