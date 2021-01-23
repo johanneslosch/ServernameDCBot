@@ -23,24 +23,22 @@ public class Config {
         if (FileHelper.checkFile(path, filename, "prop")) {
             try {
 
-                input = new FileInputStream(new File(path + "/" + filename + ".prop"));
+                input = new FileInputStream((path + "/" + filename + ".prop"));
 
-                // load a properties file
                 prop.load(input);
 
-                // get the property value and print it out
                 prop.getProperty(key);
 
-            } catch (IOException ex) {
-                Logger.error(ex.getMessage());
-                ex.printStackTrace();
+            } catch (IOException e) {
+                Logger.error(ErrorHandler.getErrorMessage(ErrorHandler
+                        .ErrorCodes.FILE_IO_EXCEPTION, java.util.Optional.ofNullable(e.getMessage())));
             } finally {
                 if (input != null) {
                     try {
                         input.close();
                     } catch (IOException e) {
-                        Logger.error(e.getMessage());
-                        e.printStackTrace();
+                        Logger.error(ErrorHandler.getErrorMessage(ErrorHandler
+                                .ErrorCodes.FILE_IO_EXCEPTION, java.util.Optional.ofNullable(e.getMessage())));
                     }
                 }
             }
@@ -57,34 +55,18 @@ public class Config {
      */
     public static void writeConfig(String path, String filename, String key, String value) {
         if (FileHelper.checkFile(path, filename, "prop")) {
-            /**
-             * init Properties and Output stream
-             */
-
             Properties properties = new Properties();
             OutputStream outputStream = null;
 
-            /**
-             * set output- directory and file name
-             */
             try {
                 outputStream =
                         new FileOutputStream(path + "/" + filename + ".prop", true);
             } catch (FileNotFoundException e) {
-                Logger.error(e.getMessage());
-                e.printStackTrace();
+                Logger.error(ErrorHandler.getErrorMessage(ErrorHandler.ErrorCodes.FILE_NOT_FOUND,
+                        java.util.Optional.ofNullable(e.getMessage())));
             }
-
-            /**
-             * set first properties to enter in file
-             * like :
-             * var1=example
-             */
             properties.setProperty(key, value);
 
-            /**
-             * saving properties file and content
-             */
             try {
                 properties.store(outputStream, null);
             } catch (IOException e1) {
@@ -123,10 +105,11 @@ class ReadFile {
             in.close();
             return content;
         } catch (UnsupportedEncodingException | FileNotFoundException e) {
-            System.out.println(e.getMessage());
+            Logger.error(ErrorHandler.getErrorMessage(ErrorHandler.ErrorCodes.FILE_NOT_FOUND,
+                    java.util.Optional.ofNullable(e.getMessage())));
         } catch (IOException e) {
-            Logger.error(e.getMessage());
-            e.printStackTrace();
+            Logger.error(ErrorHandler.getErrorMessage(ErrorHandler.ErrorCodes.FILE_IO_EXCEPTION,
+                    java.util.Optional.ofNullable(e.getMessage())));
         }
         return null;
     }

@@ -7,7 +7,7 @@ public class Logger {
      * @param content a {@link java.lang.String} object.
      */
     public static void msg(String content) {
-        logger("msg", "content");
+        logger("msg", content);
     }
 
     /**
@@ -32,14 +32,14 @@ public class Logger {
         if (type.equals("warning")) {
             WriteFile.writer("logs", "LOG", "log",
                     String.format("[WARNING]: %s \n", content));
-        } else if (type.equals("error")) {
+        }
+        if (type.equals("error")) {
             WriteFile.writer("logs", "LOG", "log",
                     String.format("[ERROR]: %s \n", content));
-        } else if (type.equals("msg")){
+        }
+        if (type.equals("msg")){
             WriteFile.writer("logs", "LOG", "log",
                     String.format("[MESSAGE]: %s \n", content));
-        }else {
-            System.out.println("WRONG LOG parameter");
         }
     }
 

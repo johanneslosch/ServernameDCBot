@@ -25,7 +25,7 @@ public class WriteFile {
                     e.printStackTrace();
                 }
             } else {
-                Logger.error("File not found");
+                Logger.error(String.format("Error code: %d", ErrorHandler.ErrorCodes.FILE_NOT_FOUND));
             }
         }
     }
