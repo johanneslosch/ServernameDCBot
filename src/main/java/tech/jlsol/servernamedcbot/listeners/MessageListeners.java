@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import tech.jlsol.servernamedcbot.util.Config;
+import tech.jlsol.servernamedcbot.util.ErrorHandler;
 import tech.jlsol.servernamedcbot.util.Logger;
 
 import javax.annotation.Nonnull;
@@ -47,7 +48,7 @@ public class MessageListeners extends ListenerAdapter {
                                     "0");
                             event.getChannel().sendMessage("reset successful").
                                     complete().delete().completeAfter(20, TimeUnit.SECONDS);
-                            Logger.msg("reset successful");
+                            Logger.msg("Feature Request - reset successful");
 
                         }
                         else
@@ -57,7 +58,8 @@ public class MessageListeners extends ListenerAdapter {
                                     "FeatureRequestHelper",
                                     "ID-FeatureRequest",
                                     "0");
-                            Logger.error("Failed to delete the file");
+                            Logger.error(ErrorHandler.getErrorMessage(ErrorHandler.ErrorCodes.SECURITY_EXCEPTION,
+                                    java.util.Optional.of("Failed to delete the file")));
                         }
                 }
                 if(event.getMessage().getContentDisplay()
@@ -112,7 +114,8 @@ public class MessageListeners extends ListenerAdapter {
                             .build())
                     .queue();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Logger.error(ErrorHandler.getErrorMessage(ErrorHandler.ErrorCodes.FILE_NOT_FOUND,
+                    java.util.Optional.ofNullable(e.getMessage())));
         }
     }
 }

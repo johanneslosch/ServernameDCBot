@@ -80,7 +80,8 @@ public class ReactionRemoveHandler {
             }*/
         }
     }
-    public static void controlReactionGames(GuildMessageReactionRemoveEvent event, String emote, JSONObject role){
+    public static void controlReactionGames(GuildMessageReactionRemoveEvent event,
+                                            String emote, JSONObject role){
         switch (emote) {
             case "RE:U+1f600": {//grinning
                 removeRole(event, role.get("game1").toString());

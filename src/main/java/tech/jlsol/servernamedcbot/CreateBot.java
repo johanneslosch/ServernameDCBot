@@ -36,21 +36,7 @@ public class CreateBot {
                     //.setActivity(CheckStatus.Status())
                     .addEventListeners(new ReactionsListeners())
                     .addEventListeners(new VoiceListeners())
-<<<<<<< HEAD
-=======
                     .addEventListeners(new MessageListeners())
-                    /*
-                    guild listener
-                    */
-                    //.addEventListeners(new _VoiceChannel())
-                    /*
-                    commands
-                    */
-                    //.addEventListeners(new Blacklist_Command())
-                    /*
-                    build the bot
-                    */
->>>>>>> 43a04c710a61ccea01101acab699b018d81d0e86
                     .build();
         } catch (LoginException e) {
             e.printStackTrace();
