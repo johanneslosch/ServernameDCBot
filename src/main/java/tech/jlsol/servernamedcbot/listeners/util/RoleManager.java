@@ -9,13 +9,13 @@ public class RoleManager {
     public static void giveRole(GuildMessageReactionAddEvent event, String role){
         if(!hasRole(event, event.getGuild().getRolesByName(role, true).get(0))){
             event.getGuild().addRoleToMember(event.getUserId(), event.getGuild().getRolesByName(role, true).get(0)).reason("reacted to Message").queue();
-            Logger.warning(String.format("User %s got role %s", event.getUserId(), role));
+            Logger.msg(String.format("User %s got role %s", event.getUserId(), role));
         }
     }
     public static void removeRole(GuildMessageReactionRemoveEvent event, String role){
         if(hasRoleRemove(event, event.getGuild().getRolesByName(role, true).get(0))){
             event.getGuild().removeRoleFromMember(event.getUserId(), event.getGuild().getRolesByName(role, true).get(0)).reason("removed reaction from message").queue();
-            Logger.warning(String.format("User %s got role removed %s", event.getUserId(), role));
+            Logger.msg(String.format("User %s got role removed %s", event.getUserId(), role));
         }
     }
     static boolean hasRole(GuildMessageReactionAddEvent event, Role role){

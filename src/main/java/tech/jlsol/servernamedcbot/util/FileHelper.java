@@ -19,7 +19,8 @@ public class FileHelper {
                 f.createNewFile();
             } catch (IOException e) {
                 Logger.error(e.getMessage());
-                System.err.println("Error creating " + f.toString());
+                Logger.error(String.format("ERROR CODE: %d\n%s",
+                        ErrorHandler.ErrorCodes.FILE_CREATION_EXCEPTION, f.toString()));
             }
             return f.isFile() && f.canWrite() && f.canRead();
         }
@@ -35,7 +36,6 @@ public class FileHelper {
         File theDir = new File(path);
 
         if (!theDir.exists()) {
-            System.out.println("creating directory: " + theDir.getName());
             boolean result = false;
 
             try {
@@ -46,7 +46,7 @@ public class FileHelper {
                 System.err.println(se);
             }
             if (result) {
-                System.out.println("DIR created");
+                Logger.msg(String.format("directory %s created", path));
             }
         }
         return true;

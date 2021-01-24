@@ -1,6 +1,5 @@
 package tech.jlsol.servernamedcbot.util;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class JSONHandler {
