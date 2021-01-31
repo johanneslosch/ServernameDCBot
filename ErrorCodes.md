@@ -10,3 +10,7 @@
 ```
  SECURITY_EXCEPTION = 30
  ```
+## SQL
+```
+SQL_EXCEPTION
+```

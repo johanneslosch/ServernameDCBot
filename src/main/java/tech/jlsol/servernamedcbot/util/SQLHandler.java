@@ -8,6 +8,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.Properties;
 
@@ -124,6 +125,12 @@ public class SQLHandler {
         prepareStatement.execute();
         return prepareStatement;
     }
+    private static PreparedStatement preparedStatementBirthday(String userID, String creationDate) throws SQLException {
+        connect();
+        prepareStatement = connection.prepareStatement("INSERT INTO `birthday`(`id`, `userID`, `accountCreateDate`) VALUES (NULL,'" + userID +"','" + creationDate + "')");
+        prepareStatement.execute();
+        return prepareStatement;
+    }
 
     /**
      * Deletes Data from Database
@@ -195,7 +202,9 @@ public class SQLHandler {
             else {
                 SQLHandler.preparedStatementMessageRecive(time, channelID, length, 0, roles, guild);
             }
-
+        }
+        public static void setBirthday(String userID, OffsetDateTime date) throws SQLException {
+            SQLHandler.preparedStatementBirthday(userID, date.toString());
         }
     }
 }
