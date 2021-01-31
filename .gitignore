@@ -4,3 +4,6 @@ data/credentials.prop
 servernameDCBot.iml
 featureRequest/
 target/
+gradle/
+.gradle/
+/build/

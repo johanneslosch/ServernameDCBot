@@ -1,5 +1,12 @@
 [UNRELEASED]
 
+##technical
+ - fixed MYSQL error
+ - cleaned code
+ - switched to gradle
+
+[v1.2-ALPHA]
+
 ## features
  - added Feature Request
 

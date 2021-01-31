@@ -3,9 +3,6 @@ package tech.jlsol.servernamedcbot.util;
 import java.io.FileWriter;
 
 public class WriteFile {
-  /*
-  Reference https://www.journaldev.com/20891/java-filewriter-example
-   */
         /**
          * <p>writer.</p>
          *

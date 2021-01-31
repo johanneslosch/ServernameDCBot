@@ -45,7 +45,8 @@ public class CreateBot {
         }
     }
     private String getToken() {
-        if (!Config.readConfig("data", "credentials", "discordToken").isEmpty() && Config.readConfig("data", "credentials", "discordToken").length() == 59) {
+        if (!Config.readConfig("data", "credentials", "discordToken").isEmpty()
+                && Config.readConfig("data", "credentials", "discordToken").length() == 59) {
             return Config.readConfig("data", "credentials", "discordToken");
         } else {
             System.err.println("Invalid Bot Token");

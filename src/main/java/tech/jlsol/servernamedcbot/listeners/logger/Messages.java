@@ -22,7 +22,8 @@ public class Messages extends ListenerAdapter {
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
         try {
             SQLHandler.MySQLUseDataManager.setMessageReceive(timeStamp, event.getChannel().getId(),
-                    event.getMessage().getContentDisplay().length(), event.getAuthor().isBot(), event.getAuthor().getJDA().getRoles().size(), event.getGuild().getId());
+                    event.getMessage().getContentDisplay().length(),
+                    event.getAuthor().isBot(), event.getMember().getRoles().size(), event.getGuild().getId());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             Logger.error(throwables.getMessage());
@@ -31,7 +32,8 @@ public class Messages extends ListenerAdapter {
     public void onGuildMessageUpdate(@Nonnull GuildMessageUpdateEvent event) {
         try {
             SQLHandler.MySQLUseDataManager.setMessageReceive(timeStamp, event.getChannel().getId(),
-                    event.getMessage().getContentDisplay().length(), event.getAuthor().isBot(), event.getAuthor().getJDA().getRoles().size(), event.getGuild().getId());
+                    event.getMessage().getContentDisplay().length(),
+                    event.getAuthor().isBot(), event.getAuthor().getJDA().getRoles().size(), event.getGuild().getId());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             Logger.error(throwables.getMessage());
@@ -39,7 +41,9 @@ public class Messages extends ListenerAdapter {
     }
     public void onGuildMessageReactionAdd(@Nonnull GuildMessageReactionAddEvent event) {
         try {
-            SQLHandler.MySQLUseDataManager.setMessageReact(timeStamp, event.getChannel().getId(), event.getUser().isBot(), event.getUser().getJDA().getRoles().size(), event.getGuild().getId(), event.getReaction().getReactionEmote().getEmoji());
+            SQLHandler.MySQLUseDataManager.setMessageReact(timeStamp, event.getChannel().getId(),
+                    event.getUser().isBot(), event.getUser().getJDA().getRoles().size(),
+                    event.getGuild().getId(), event.getReaction().getReactionEmote().getEmoji());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             Logger.error(throwables.getMessage());
@@ -47,7 +51,9 @@ public class Messages extends ListenerAdapter {
     }
     public void onGuildMessageReactionRemove(@Nonnull GuildMessageReactionRemoveEvent event) {
         try {
-            SQLHandler.MySQLUseDataManager.setMessageReact(timeStamp, event.getChannel().getId(), event.getUser().isBot(), event.getUser().getJDA().getRoles().size(), event.getGuild().getId(), event.getReaction().getReactionEmote().getEmoji());
+            SQLHandler.MySQLUseDataManager.setMessageReact(timeStamp, event.getChannel().getId(),
+                    event.getUser().isBot(), event.getUser().getJDA().getRoles().size(),
+                    event.getGuild().getId(), event.getReaction().getReactionEmote().getEmoji());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             Logger.error(throwables.getMessage());

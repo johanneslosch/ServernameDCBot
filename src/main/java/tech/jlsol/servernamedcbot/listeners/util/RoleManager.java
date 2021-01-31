@@ -5,16 +5,22 @@ import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEve
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;
 import tech.jlsol.servernamedcbot.util.Logger;
 
+import java.util.Objects;
+
 public class RoleManager {
     public static void giveRole(GuildMessageReactionAddEvent event, String role){
         if(!hasRole(event, event.getGuild().getRolesByName(role, true).get(0))){
-            event.getGuild().addRoleToMember(event.getUserId(), event.getGuild().getRolesByName(role, true).get(0)).reason("reacted to Message").queue();
+            event.getGuild().addRoleToMember(event.getUserId(),
+                    event.getGuild().getRolesByName(role, true).get(0))
+                    .reason("reacted to Message").queue();
             Logger.msg(String.format("User %s got role %s", event.getUserId(), role));
         }
     }
     public static void removeRole(GuildMessageReactionRemoveEvent event, String role){
         if(hasRoleRemove(event, event.getGuild().getRolesByName(role, true).get(0))){
-            event.getGuild().removeRoleFromMember(event.getUserId(), event.getGuild().getRolesByName(role, true).get(0)).reason("removed reaction from message").queue();
+            event.getGuild().removeRoleFromMember(event.getUserId(),
+                    event.getGuild().getRolesByName(role, true).get(0))
+                    .reason("removed reaction from message").queue();
             Logger.msg(String.format("User %s got role removed %s", event.getUserId(), role));
         }
     }
@@ -22,6 +28,6 @@ public class RoleManager {
         return event.getMember().getRoles().contains(role);
     }
     static boolean hasRoleRemove(GuildMessageReactionRemoveEvent event, Role role){
-        return event.getMember().getRoles().contains(role);
+        return Objects.requireNonNull(event.getMember()).getRoles().contains(role);
     }
 }
