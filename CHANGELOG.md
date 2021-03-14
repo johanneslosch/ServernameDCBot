@@ -1,6 +1,8 @@
 [UNRELEASED]
 
-##technical
+[v1.3-ALPHA]
+
+## technical
  - fixed MYSQL error
  - cleaned code
  - switched to gradle
