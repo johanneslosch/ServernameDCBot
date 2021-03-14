@@ -8,11 +8,13 @@ import org.json.JSONTokener;
 import tech.jlsol.servernamedcbot.util.Config;
 import tech.jlsol.servernamedcbot.util.ErrorHandler;
 import tech.jlsol.servernamedcbot.util.Logger;
+import tech.jlsol.servernamedcbot.util.SQLHandler;
 
 import javax.annotation.Nonnull;
 
 import java.awt.*;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 import static tech.jlsol.servernamedcbot.util.JSONHandler.FeatureRequestWriter;
@@ -25,9 +27,16 @@ public class MessageListeners extends ListenerAdapter {
         if(!event.getAuthor().isBot()){
             if(event.getChannel().getName().equals(getConfig("featureRQ-TC"))){
                 if(event.getMessage().getContentRaw().toLowerCase().startsWith(getConfig("prefix"))){
-                    FeatureRequestWriter(event.getMessage().getContentRaw()
-                                    .substring(getConfig("prefix").length()),
-                            event.getAuthor().getAsTag() + "/" + event.getAuthor().getId());
+                    //FeatureRequestWriter(event.getMessage().getContentRaw()
+                    //                .substring(getConfig("prefix").length()),
+                    //        event.getAuthor().getAsTag() + "/" + event.getAuthor().getId());
+                    try {
+                        SQLHandler.MySQLUseDataManager.setFeatureRequest(SQLHandler.MySQLUseDataManager.timeStamp,
+                                event.getMessage().getContentRaw().substring(getConfig("prefix").length()),
+                                event.getAuthor().getAsTag() + "/" + event.getAuthor().getId());
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
                 }
             }else{
                 if(event.getMessage().getContentRaw()

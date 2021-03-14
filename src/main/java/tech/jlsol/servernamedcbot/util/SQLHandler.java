@@ -16,8 +16,9 @@ public class SQLHandler {
     private static final String DBNAME = Config.readConfig("data", "credentials", "databaseUSER");
     private static final String USER = DBNAME;
     private static final String PASSWORD = Config.readConfig("data", "credentials", "databasePASSWORD");
+    private static final String URL = Config.readConfig("data", "credentials","databaseURL");
 
-    private static final String DATABASE_URL = "jdbc:mysql://" + Config.readConfig("data", "credentials","databaseURL") +":" + PORT + "/" + DBNAME;
+    private static final String DATABASE_URL = "jdbc:mysql://" + URL +":" + PORT + "/" + DBNAME;
     private static Connection connection;
     private static PreparedStatement prepareStatement;
 
@@ -31,14 +32,11 @@ public class SQLHandler {
             System.out.println(System.nanoTime() + " Connecting database...");
 
             try {
-                //String connectionString = "jdbc:mysql://116.203.106.254:3306/" + DBNAME + "?user=" + USER+ "&password=" + PASSWORD + "&useUnicode=true&characterEncoding=UTF-8";
-                //connection = DriverManager.getConnection(connectionString);
-                //Context context = new InitialContext();
-                //DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/myDB");
                 MysqlDataSource dataSource = new MysqlDataSource();
                 dataSource.setUser(USER);
                 dataSource.setPassword(PASSWORD);
-                dataSource.setServerName("116.203.106.254");
+                dataSource.setDatabaseName(USER);
+                dataSource.setServerName(URL);
                 connection = dataSource.getConnection();
                 System.out.println(System.nanoTime() + " Database connected!");
             } catch (SQLException e) {
@@ -60,10 +58,10 @@ public class SQLHandler {
      * @return              preparedStatement
      * @throws SQLException then connection error?
      */
-    private static PreparedStatement preparedStatementMessageRecive(String time, String channelID, int length, boolean bot, int roles, String guild) throws SQLException {
+    private static PreparedStatement preparedStatementMessageRecive(String time, String channelID, int length, int bot, int roles, String guild) throws SQLException {
         connect();
+        prepareStatement = connection.prepareStatement("INSERT INTO `messagerecive`(`time`, `channel_id`, `length`, `bot`, `roles`, `guild`) VALUES ('" +time+"','"+channelID+"','"+length+"','"+bot+"','"+roles+"','"+guild+"')");
         prepareStatement.execute();
-        prepareStatement = connection.prepareStatement(String.format("INSERT INTO `messagerecive`(`time`, `channel_id`, `length`, `bot`, `roles`, `guild`) VALUES (%s,%s,%s,%s,%s,%s)", time, channelID, length, bot, roles, guild));
         return prepareStatement;
     }
 
@@ -80,8 +78,8 @@ public class SQLHandler {
      */
     private static PreparedStatement preparedStatementUserUpdate(String time, boolean bot, int roles, String guild, String oldStatus, String newStatus) throws SQLException {
         connect();
+        prepareStatement = connection.prepareStatement(String.format("INSERT INTO `userupdate`(`time`, `bot`, `roles`, `guild`, `oldStatus`, `newStatus`) VALUES (`%s`,`%s`,`%s`,`%s`,`%s`,`%s`)", time, bot, roles, guild, oldStatus, newStatus));
         prepareStatement.execute();
-        prepareStatement = connection.prepareStatement(String.format("INSERT INTO `userupdate`(`time`, `bot`, `roles`, `guild`, `oldStatus`, `newStatus`) VALUES (%s,%s,%s,%s,%s,%s)", time, bot, roles, guild, oldStatus, newStatus));
         return prepareStatement;
     }
 
@@ -97,8 +95,8 @@ public class SQLHandler {
      */
     private static PreparedStatement preparedStatementMemberChange(String time, boolean bot, int roles, String guild, String event) throws SQLException {
         connect();
+        prepareStatement = connection.prepareStatement(String.format("INSERT INTO `memberchange`(`time`, `bot`, `roles`, `guild`, `event`) VALUES (`%s`,`%s`,`%s`,`%s`,`%s`)", time, bot, roles, guild, event));
         prepareStatement.execute();
-        prepareStatement = connection.prepareStatement(String.format("INSERT INTO `memberchange`(`time`, `bot`, `roles`, `guild`, `event`) VALUES (%s,%s,%s,%s,%s)", time, bot, roles, guild, event));
         return prepareStatement;
     }
 
@@ -115,15 +113,15 @@ public class SQLHandler {
      */
     private static PreparedStatement preparedStatementMessageReact(String time, String channelID, boolean bot, int roles, String guild, String emoji) throws SQLException {
         connect();
+        prepareStatement = connection.prepareStatement(String.format("INSERT INTO `messagereact`(`time`, `channel_id`, `bot`, `roles`, `guild`, `emoji`)  VALUES ('%s','%s','%s','%s','%s','%s')", time, channelID, bot, roles, guild, emoji));
         prepareStatement.execute();
-        prepareStatement = connection.prepareStatement(String.format("INSERT INTO `messagereact`(`time`, `channel_id`, `bot`, `roles`, `guild`, `emoji`)  VALUES (%s,%s,%s,%s,%s,%s)", time, channelID, bot, roles, guild, emoji));
         return prepareStatement;
     }
 
     private static PreparedStatement preparedStatementFeatureRequest(String time, String message, String user) throws SQLException {
         connect();
+        prepareStatement = connection.prepareStatement("INSERT INTO `featurerequests`(`id`, `time`, `request`, `requested by`) VALUES (NULL,'"+time+"','"+message+"','"+user+"')");
         prepareStatement.execute();
-        prepareStatement = connection.prepareStatement(String.format("INSERT INTO `featurerequests` (`id`, `time`, `request`, `requested by`) VALUES (NULL,%s,%s,%s) %s,%s,%s,)", time, message, user));
         return prepareStatement;
     }
 
@@ -192,7 +190,12 @@ public class SQLHandler {
         }
 
         public static void setMessageReceive(String time, String channelID, int length, boolean bot, int roles, String guild) throws SQLException {
-            SQLHandler.preparedStatementMessageRecive(time, channelID, length, bot, roles, guild);
+            if(bot){
+                SQLHandler.preparedStatementMessageRecive(time, channelID, length, 1, roles, guild);}
+            else {
+                SQLHandler.preparedStatementMessageRecive(time, channelID, length, 0, roles, guild);
+            }
+
         }
     }
 }

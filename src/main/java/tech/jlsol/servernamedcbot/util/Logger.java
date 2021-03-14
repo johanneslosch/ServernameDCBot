@@ -24,9 +24,6 @@ public class Logger {
      *
      * @param content a {@link java.lang.String} object.
      */
-    public static void warning(String content) {
-        logger("warning", content);
-    }
 
     private static void logger(String type, String content) {
         if (type.equals("warning")) {
