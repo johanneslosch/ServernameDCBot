@@ -5,10 +5,11 @@
 
 [v1.3-ALPHA - caribbean update]
 
-##technical
+## technical
  - fixed MYSQL error
  - cleaned code
  - switched to gradle
+ - fixed mute chat error
 
 [v1.2-ALPHA]
 
