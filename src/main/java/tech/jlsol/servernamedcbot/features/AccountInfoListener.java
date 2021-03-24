@@ -18,60 +18,60 @@ public class AccountInfoListener extends ListenerAdapter {
       if (event.getMessage().getContentDisplay().substring(4).startsWith("*")) {
         userID = userID.replace("*", "");
       }
-        event
-          .getChannel()
-          .sendMessage(
-            new EmbedBuilder()
-              .setTitle("Account Info")
-              .setColor(Color.MAGENTA)
-              .setDescription(
-                "@" +
-                (
-                  Objects.requireNonNull(event.getJDA().getUserById(userID))
-                ).getAsTag() +
-                "\n" +
-                "Name: " +
-                (
-                  Objects.requireNonNull(event.getJDA().getUserById(userID))
-                ).getName() +
-                "\n" +
-                "Bot: " +
-                (
-                  Objects.requireNonNull(event.getJDA().getUserById(userID))
-                ).isBot() +
-                "\n" +
-                "Account created at: " +
-                Objects
-                  .requireNonNull(
-                    Objects
-                      .requireNonNull(
-                        event
-                          .getJDA()
-                          .getGuildById(
-                            Config.readConfig("data", "settings", "guildID")
-                          )
-                      )
-                      .getMemberById(userID)
-                  )
-                  .getTimeCreated()
-                  .format(DateTimeFormatter.ISO_LOCAL_DATE) +
-                "\n" +
-                "Nickname: " +
-                Objects
-                  .requireNonNull(event.getGuild().getMemberById(userID))
-                  .getNickname() +
-                "\n"
-              )
-              .setFooter("Request created at: " + getDateAndTime())
-              .setThumbnail(
-                Objects
-                  .requireNonNull(event.getJDA().getUserById(userID))
-                  .getAvatarUrl()
-              )
-              .setAuthor(event.getAuthor().getName())
-              .build()
-          )
-          .queue();
+      event
+        .getChannel()
+        .sendMessage(
+          new EmbedBuilder()
+            .setTitle("Account Info")
+            .setColor(Color.MAGENTA)
+            .setDescription(
+              "@" +
+              (
+                Objects.requireNonNull(event.getJDA().getUserById(userID))
+              ).getAsTag() +
+              "\n" +
+              "Name: " +
+              (
+                Objects.requireNonNull(event.getJDA().getUserById(userID))
+              ).getName() +
+              "\n" +
+              "Bot: " +
+              (
+                Objects.requireNonNull(event.getJDA().getUserById(userID))
+              ).isBot() +
+              "\n" +
+              "Account created at: " +
+              Objects
+                .requireNonNull(
+                  Objects
+                    .requireNonNull(
+                      event
+                        .getJDA()
+                        .getGuildById(
+                          Config.readConfig("data", "settings", "guildID")
+                        )
+                    )
+                    .getMemberById(userID)
+                )
+                .getTimeCreated()
+                .format(DateTimeFormatter.ISO_LOCAL_DATE) +
+              "\n" +
+              "Nickname: " +
+              Objects
+                .requireNonNull(event.getGuild().getMemberById(userID))
+                .getNickname() +
+              "\n"
+            )
+            .setFooter("Request created at: " + getDateAndTime())
+            .setThumbnail(
+              Objects
+                .requireNonNull(event.getJDA().getUserById(userID))
+                .getAvatarUrl()
+            )
+            .setAuthor(event.getAuthor().getName())
+            .build()
+        )
+        .queue();
     }
   }
 
