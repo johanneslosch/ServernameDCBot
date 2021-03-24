@@ -12,6 +12,6 @@ public class ErrorHandler {
         public static Integer FILE_CREATION_EXCEPTION = 21;
         public static Integer FILE_IO_EXCEPTION = 22;
         public static Integer SECURITY_EXCEPTION = 30;
-
+        public static Integer SQL_EXCEPTION = 40;
     }
 }

@@ -2,14 +2,10 @@ package tech.jlsol.servernamedcbot.util;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
 import java.util.Calendar;
-import java.util.Properties;
 
 public class SQLHandler {
     private static final String PORT = Config.readConfig("data", "credentials", "databasePORT");
@@ -124,6 +120,18 @@ public class SQLHandler {
         prepareStatement.execute();
         return prepareStatement;
     }
+    private static PreparedStatement preparedStatementBirthday(String userID, String creationDate) throws SQLException {
+        connect();
+        prepareStatement = connection.prepareStatement("INSERT INTO `birthday`(`id`, `userID`, `accountCreateDate`) VALUES (NULL,'" + userID +"','" + creationDate + "')");
+        prepareStatement.execute();
+        return prepareStatement;
+    }
+    private static PreparedStatement preparedStatementFindBirthday(String userID) throws SQLException {
+        connect();
+        prepareStatement = connection.prepareStatement("SELECT * FROM `birthday` WHERE `userID` = '" + userID +"'");
+        prepareStatement.execute();
+        return prepareStatement;
+    }
 
     /**
      * Deletes Data from Database
@@ -151,6 +159,19 @@ public class SQLHandler {
         Statement statement = null;
         statement = connection.createStatement();
         String sql = ("SELECT " +  category + " FROM `" + table + "`;");
+        assert statement != null;
+
+
+        ResultSet resultSet = statement.executeQuery(sql);
+        resultSet.next();
+        return resultSet;
+    }
+
+    private static ResultSet getBirthday(String userID) throws SQLException {
+        connect();
+        Statement statement = null;
+        statement = connection.createStatement();
+        String sql = ("SELECT * FROM `birthday` WHERE `userID` = '" + userID +"'");
         assert statement != null;
 
 
@@ -195,7 +216,12 @@ public class SQLHandler {
             else {
                 SQLHandler.preparedStatementMessageRecive(time, channelID, length, 0, roles, guild);
             }
-
+        }
+        public static void setBirthday(String userID, OffsetDateTime date) throws SQLException {
+            SQLHandler.preparedStatementBirthday(userID, date.toString());
+        }
+        public static Object getBirthday(String userID) throws SQLException {
+            return SQLHandler.getBirthday(userID).getObject(3);
         }
     }
 }
