@@ -1,5 +1,10 @@
 [UNRELEASED]
 
+## features 
+ - Account Info
+
+[v1.3-ALPHA - caribbean update]
+
 ##technical
  - fixed MYSQL error
  - cleaned code
