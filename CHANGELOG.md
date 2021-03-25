@@ -2,6 +2,7 @@
 
 ## features 
  - Account Info
+ - Ticket system
 
 [v1.3-ALPHA - caribbean update]
 
