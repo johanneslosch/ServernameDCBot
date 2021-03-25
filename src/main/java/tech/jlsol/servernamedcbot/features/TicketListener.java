@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
@@ -41,27 +42,23 @@ public class TicketListener extends ListenerAdapter {
           )
           .get(0)
           .sendMessage(
-            new EmbedBuilder()
-              .setTitle(
-                "New Ticket: " +
-                Integer.toString(
-                  SQLHandler.MySQLUseDataManager.getTicketIdMax()
-                )
-              )
-              .setColor(Color.CYAN)
-              .setDescription(
-                (CharSequence) SQLHandler.MySQLUseDataManager
-                  .getTicket(SQLHandler.MySQLUseDataManager.getTicketIdMax())
-                  .get(4)
-              )
-              .setAuthor(
-                String.valueOf(
-                  SQLHandler.MySQLUseDataManager
-                    .getTicket(SQLHandler.MySQLUseDataManager.getTicketIdMax())
-                    .get(1)
-                )
-              )
-              .build()
+            getMessage(
+              "New Ticket: " + SQLHandler.MySQLUseDataManager.getTicketIdMax(),
+              SQLHandler.MySQLUseDataManager
+                .getTicket(SQLHandler.MySQLUseDataManager.getTicketIdMax())
+                .get(1)
+                .toString(),
+              Color.BLUE,
+              SQLHandler.MySQLUseDataManager
+                .getTicket(SQLHandler.MySQLUseDataManager.getTicketIdMax())
+                .get(4)
+                .toString(),
+              "Status: " +
+              SQLHandler.MySQLUseDataManager
+                .getTicket(SQLHandler.MySQLUseDataManager.getTicketIdMax())
+                .get(2)
+                .toString()
+            )
           )
           .queue();
       } catch (SQLException throwables) {
@@ -176,5 +173,175 @@ public class TicketListener extends ListenerAdapter {
         }
       }
     }
+    if (!Objects.requireNonNull(event.getUser()).isBot()) {
+      try {
+        switch (
+          SQLHandler.MySQLUseDataManager
+            .getTicket(SQLHandler.MySQLUseDataManager.getTicketIdMax())
+            .get(2)
+            .toString()
+        ) {
+          case "closed":
+            try {
+              Objects
+                .requireNonNull(
+                  event
+                    .getJDA()
+                    .getGuildById(
+                      Config.readConfig("data", "settings", "guildID")
+                    )
+                )
+                .getTextChannelsByName(
+                  Config.readConfig("data", "settings", "ticketChannel"),
+                  true
+                )
+                .get(0)
+                .editMessageById(
+                  event.getMessageId(),
+                  getMessage(
+                    "New Ticket: " +
+                    SQLHandler.MySQLUseDataManager.getTicketIdMax(),
+                    SQLHandler.MySQLUseDataManager
+                      .getTicket(
+                        SQLHandler.MySQLUseDataManager.getTicketIdMax()
+                      )
+                      .get(1)
+                      .toString(),
+                    Color.RED,
+                    SQLHandler.MySQLUseDataManager
+                      .getTicket(
+                        SQLHandler.MySQLUseDataManager.getTicketIdMax()
+                      )
+                      .get(4)
+                      .toString(),
+                    "Status: " +
+                    SQLHandler.MySQLUseDataManager
+                      .getTicket(
+                        SQLHandler.MySQLUseDataManager.getTicketIdMax()
+                      )
+                      .get(2)
+                      .toString()
+                  )
+                )
+                .queue();
+            } catch (SQLException throwables) {
+              throwables.printStackTrace();
+            }
+            break;
+          case "in progress":
+            try {
+              Objects
+                .requireNonNull(
+                  event
+                    .getJDA()
+                    .getGuildById(
+                      Config.readConfig("data", "settings", "guildID")
+                    )
+                )
+                .getTextChannelsByName(
+                  Config.readConfig("data", "settings", "ticketChannel"),
+                  true
+                )
+                .get(0)
+                .editMessageById(
+                  event.getMessageId(),
+                  getMessage(
+                    "New Ticket: " +
+                    SQLHandler.MySQLUseDataManager.getTicketIdMax(),
+                    SQLHandler.MySQLUseDataManager
+                      .getTicket(
+                        SQLHandler.MySQLUseDataManager.getTicketIdMax()
+                      )
+                      .get(1)
+                      .toString(),
+                    Color.ORANGE,
+                    SQLHandler.MySQLUseDataManager
+                      .getTicket(
+                        SQLHandler.MySQLUseDataManager.getTicketIdMax()
+                      )
+                      .get(4)
+                      .toString(),
+                    "Status: " +
+                    SQLHandler.MySQLUseDataManager
+                      .getTicket(
+                        SQLHandler.MySQLUseDataManager.getTicketIdMax()
+                      )
+                      .get(2)
+                      .toString()
+                  )
+                )
+                .queue();
+            } catch (SQLException throwables) {
+              throwables.printStackTrace();
+            }
+            break;
+          case "done":
+            try {
+              Objects
+                .requireNonNull(
+                  event
+                    .getJDA()
+                    .getGuildById(
+                      Config.readConfig("data", "settings", "guildID")
+                    )
+                )
+                .getTextChannelsByName(
+                  Config.readConfig("data", "settings", "ticketChannel"),
+                  true
+                )
+                .get(0)
+                .editMessageById(
+                  event.getMessageId(),
+                  getMessage(
+                    "New Ticket: " +
+                    SQLHandler.MySQLUseDataManager.getTicketIdMax(),
+                    SQLHandler.MySQLUseDataManager
+                      .getTicket(
+                        SQLHandler.MySQLUseDataManager.getTicketIdMax()
+                      )
+                      .get(1)
+                      .toString(),
+                    Color.GREEN,
+                    SQLHandler.MySQLUseDataManager
+                      .getTicket(
+                        SQLHandler.MySQLUseDataManager.getTicketIdMax()
+                      )
+                      .get(4)
+                      .toString(),
+                    "Status: " +
+                    SQLHandler.MySQLUseDataManager
+                      .getTicket(
+                        SQLHandler.MySQLUseDataManager.getTicketIdMax()
+                      )
+                      .get(2)
+                      .toString()
+                  )
+                )
+                .queue();
+            } catch (SQLException throwables) {
+              throwables.printStackTrace();
+            }
+            break;
+        }
+      } catch (SQLException throwables) {
+        throwables.printStackTrace();
+      }
+    }
+  }
+
+  public MessageEmbed getMessage(
+    String title,
+    String author,
+    Color color,
+    String description,
+    String status
+  ) {
+    return new EmbedBuilder()
+      .setTitle(title)
+      .setAuthor(author)
+      .setColor(color)
+      .setDescription(description)
+      .setFooter(status)
+      .build();
   }
 }
