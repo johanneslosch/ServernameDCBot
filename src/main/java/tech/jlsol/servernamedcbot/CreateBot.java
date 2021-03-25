@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import tech.jlsol.servernamedcbot.features.AccountInfoListener;
+import tech.jlsol.servernamedcbot.features.TicketListener;
 import tech.jlsol.servernamedcbot.listeners.MessageListeners;
 import tech.jlsol.servernamedcbot.listeners.ReactionsListeners;
 import tech.jlsol.servernamedcbot.listeners.VoiceListeners;
@@ -42,6 +43,7 @@ public class CreateBot {
         .addEventListeners(new MessageListeners())
         .addEventListeners(new Messages())
         .addEventListeners(new AccountInfoListener())
+        .addEventListeners(new TicketListener())
         .build();
     } catch (LoginException e) {
       e.printStackTrace();

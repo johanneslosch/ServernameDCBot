@@ -4,6 +4,7 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class SQLHandler {
@@ -240,15 +241,128 @@ public class SQLHandler {
     return prepareStatement;
   }
 
-  private static PreparedStatement preparedStatementFindBirthday(String userID)
-    throws SQLException {
+  private static PreparedStatement preparedStatementTicket(
+    String createUser,
+    String status,
+    String workingUser,
+    String ticketMessage
+  ) throws SQLException {
     connect();
     prepareStatement =
       connection.prepareStatement(
-        "SELECT * FROM `birthday` WHERE `userID` = '" + userID + "'"
+        "INSERT INTO `ticket`(`id`, `ticketCreateUser`, `status`, `ticketWorkingUser`, `ticketMessage`) VALUES (NULL,'" +
+        createUser +
+        "','" +
+        status +
+        "','" +
+        workingUser +
+        "','" +
+        ticketMessage +
+        "')"
       );
     prepareStatement.execute();
     return prepareStatement;
+  }
+
+  private static PreparedStatement preparedStatementTicketHelper(
+    Integer ticketId,
+    String messageID
+  ) throws SQLException {
+    connect();
+    prepareStatement =
+      connection.prepareStatement(
+        "INSERT INTO `tickethelper`(`ticketId`, `messageId`) VALUES ('" +
+        ticketId +
+        "','" +
+        messageID +
+        "')"
+      );
+    prepareStatement.execute();
+    return prepareStatement;
+  }
+
+  private static ResultSet getTicketHelper(String messageID)
+    throws SQLException {
+    connect();
+    Statement statement = null;
+    statement = connection.createStatement();
+    String sql =
+      ("SELECT * FROM `tickethelper` WHERE `messageId`='" + messageID + "'");
+    assert statement != null;
+
+    ResultSet resultSet = statement.executeQuery(sql);
+    resultSet.next();
+    return resultSet;
+  }
+
+  private static PreparedStatement preparedStatementFindTicket(
+    String createUser
+  ) throws SQLException {
+    connect();
+    prepareStatement =
+      connection.prepareStatement(
+        "SELECT * FROM `ticket` WHERE `ticketCreateUser` = '" + createUser + "'"
+      );
+    prepareStatement.execute();
+    return prepareStatement;
+  }
+
+  private static ResultSet preparedStatementFindBirthday(String userID)
+    throws SQLException {
+    connect();
+    Statement statement = null;
+    statement = connection.createStatement();
+    String sql = ("SELECT * FROM `birthday` WHERE `userID` = '" + userID + "'");
+    assert statement != null;
+
+    ResultSet resultSet = statement.executeQuery(sql);
+    resultSet.next();
+    return resultSet;
+  }
+
+  private static ResultSet getTicket(Integer id) throws SQLException {
+    connect();
+    Statement statement = null;
+    statement = connection.createStatement();
+    String sql = ("SELECT * FROM `ticket` WHERE `id` = '" + id + "'");
+    assert statement != null;
+
+    ResultSet resultSet = statement.executeQuery(sql);
+    resultSet.next();
+    return resultSet;
+  }
+
+  private static ResultSet getTicketIdMax() throws SQLException {
+    connect();
+    Statement statement = null;
+    statement = connection.createStatement();
+    String sql = ("select MAX(id) from ticket");
+    assert statement != null;
+
+    ResultSet resultSet = statement.executeQuery(sql);
+    resultSet.next();
+    return resultSet;
+  }
+
+  private static void updateTicket(
+    String status,
+    String workingUser,
+    Integer ticketId
+  ) throws SQLException {
+    connect();
+    Statement statement;
+    statement = connection.createStatement();
+    String sql =
+      (
+        "UPDATE `ticket` SET `status`='" +
+        status +
+        "',`ticketWorkingUser`='" +
+        workingUser +
+        "' WHERE `id`=" +
+        ticketId
+      );
+    assert statement != null;
+    statement.execute(sql);
   }
 
   /**
@@ -405,6 +519,52 @@ public class SQLHandler {
     public static void setBirthday(String userID, OffsetDateTime date)
       throws SQLException {
       SQLHandler.preparedStatementBirthday(userID, date.toString());
+    }
+
+    public static void setTicket(
+      String createUser,
+      String status,
+      String workingUser,
+      String ticketMessage
+    ) throws SQLException {
+      SQLHandler.preparedStatementTicket(
+        createUser,
+        status,
+        workingUser,
+        ticketMessage
+      );
+    }
+
+    public static void setTicketHelper(Integer ticketID, String messageID)
+      throws SQLException {
+      SQLHandler.preparedStatementTicketHelper(ticketID, messageID);
+    }
+
+    public static Integer getTicketHelper(String messageID)
+      throws SQLException {
+      return SQLHandler.getTicketHelper(messageID).getInt(1);
+    }
+
+    public static ArrayList getTicket(Integer id) throws SQLException {
+      ArrayList<String> test1 = new ArrayList<>();
+      test1.add(String.valueOf(SQLHandler.getTicket(id).getObject(1)));
+      test1.add(String.valueOf(SQLHandler.getTicket(id).getObject(2)));
+      test1.add(String.valueOf(SQLHandler.getTicket(id).getObject(3)));
+      test1.add(String.valueOf(SQLHandler.getTicket(id).getObject(4)));
+      test1.add(String.valueOf(SQLHandler.getTicket(id).getObject(5)));
+      return test1;
+    }
+
+    public static Integer getTicketIdMax() throws SQLException {
+      return SQLHandler.getTicketIdMax().getInt(1);
+    }
+
+    public static void updateTicket(
+      String status,
+      String workingUser,
+      Integer ticketId
+    ) throws SQLException {
+      SQLHandler.updateTicket(status, workingUser, ticketId);
     }
 
     public static Object getBirthday(String userID) throws SQLException {
