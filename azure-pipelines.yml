@@ -8,8 +8,6 @@ trigger:
     include:
     - '*'
 
-pool:
-  vmImage: ubuntu-latest
 
 steps:
 - task: Gradle@2
