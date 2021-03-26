@@ -30,13 +30,14 @@ dependencies {
 
 group = 'tech.jlsol'
 version = '1.0-SNAPSHOT'
-description = 'servernameDCBot'
+description = 'bot'
 java.sourceCompatibility = JavaVersion.VERSION_11
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from(components.java)
-        }
-    }
+jar {
+  manifest {
+    attributes(
+      'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+      'Main-Class': 'tech.jlsol.servernamedcbot.Main'
+    )
+  }
 }
